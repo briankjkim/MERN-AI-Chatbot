@@ -1,12 +1,13 @@
-import express from "express";
+import app from "./app.js";
+import { connectToMongoDB } from "./db/connection.js";
 
-// Set up express app
-const app = express();
-
-// Middlewares
-app.use(express.json());
+const PORT = process.env.PORT || 5000;
 
 // Connections and listeners
-app.listen(5000, () => {
-  console.log("Server open and listening");
-});
+connectToMongoDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log("Server listening and connected to DB 😎");
+    });
+  })
+  .catch((err) => console.log(err));

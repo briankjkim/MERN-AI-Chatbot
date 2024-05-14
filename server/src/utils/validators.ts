@@ -1,13 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { ValidationChain, body, validationResult } from "express-validator";
+import { ContextRunner, body, validationResult } from "express-validator";
 
-export const validate = (validations: ValidationChain[]) => {
+export const validate = (validations: ContextRunner[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     for (let validation of validations) {
       const result = await validation.run(req);
-      if (!result.isEmpty()) {
-        break;
-      }
+      if (!result.isEmpty()) break;
     }
     const errors = validationResult(req);
     if (errors.isEmpty()) {

@@ -1,6 +1,8 @@
 import { compare, hash } from "bcrypt";
 import User from "../models/User.js";
 import { NextFunction, Request, Response } from "express";
+import { createToken } from "../utils/token-manager.js";
+import { COOKIE_NAME } from "../utils/constants.js";
 
 export const getAllUsers = async (
   req: Request,
@@ -28,6 +30,26 @@ export const userSignUp = async (
     const hashedPassword = await hash(password, 12);
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
+
+    // create and store tokens
+    res.clearCookie(COOKIE_NAME, {
+      httpOnly: true,
+      domain: "localhost",
+      signed: true,
+      path: "/",
+    });
+
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 7);
+    const token = createToken(newUser._id.toString(), newUser.email, "7d"); // Expire token in 7 days
+    res.cookie(COOKIE_NAME, token, {
+      path: "/",
+      domain: "localhost",
+      expires: expires,
+      httpOnly: true,
+      signed: true,
+    }); // TODO: Change domain name when deploying
+
     return res.status(201).json({ message: "OK", id: newUser._id.toString() });
   } catch (error) {
     console.log("Error: ", error);
@@ -46,10 +68,29 @@ export const userLogin = async (
     if (!foundUser) {
       return res.status(401).send("User not found.");
     }
-    const isPasswordMatched = await compare(password, foundUser.password);
-    if (!isPasswordMatched) {
+    const isPasswordCorrect = await compare(password, foundUser.password);
+    if (!isPasswordCorrect) {
       return res.status(403).send("Incorrect Password.");
     }
+
+    res.clearCookie(COOKIE_NAME, {
+      httpOnly: true,
+      domain: "localhost",
+      signed: true,
+      path: "/",
+    });
+
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 7);
+    const token = createToken(foundUser._id.toString(), foundUser.email, "7d"); // Expire token in 7 days
+    res.cookie(COOKIE_NAME, token, {
+      path: "/",
+      domain: "localhost",
+      expires: expires,
+      httpOnly: true,
+      signed: true,
+    }); // TODO: Change domain name when deploying
+
     return res
       .status(201)
       .json({ message: "OK", id: foundUser._id.toString() });

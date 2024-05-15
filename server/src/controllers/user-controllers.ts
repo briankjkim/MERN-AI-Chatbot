@@ -50,7 +50,9 @@ export const userSignUp = async (
       signed: true,
     }); // TODO: Change domain name when deploying
 
-    return res.status(201).json({ message: "OK", id: newUser._id.toString() });
+    return res
+      .status(201)
+      .json({ message: "OK", name: newUser.name, email: newUser.email });
   } catch (error) {
     console.log("Error: ", error);
     return res.status(500).json({ message: "Error", cause: error.message });
@@ -92,8 +94,8 @@ export const userLogin = async (
     }); // TODO: Change domain name when deploying
 
     return res
-      .status(201)
-      .json({ message: "OK", id: foundUser._id.toString() });
+      .status(200)
+      .json({ message: "OK", name: foundUser.name, email: foundUser.email });
   } catch (error) {
     console.log("Error: ", error);
     return res.status(500).json({ message: "Error", cause: error.message });

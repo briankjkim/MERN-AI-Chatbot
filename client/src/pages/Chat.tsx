@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 import { red } from "@mui/material/colors";
+import { DEFAULT_CHAT_MESSAGES } from "../helpers/constants";
+import ChatItem from "../components/chat/ChatItem";
+
+const chatMessages = DEFAULT_CHAT_MESSAGES;
 
 const Chat = () => {
   const auth = useAuth();
@@ -102,7 +107,11 @@ const Chat = () => {
             overflowY: "auto",
             scrollBehavior: "smooth",
           }}
-        ></Box>
+        >
+          {chatMessages.map((chat, index) => (
+            <ChatItem content={chat.content} role={chat.role} key={index} />
+          ))}
+        </Box>
       </Box>
     </Box>
   );

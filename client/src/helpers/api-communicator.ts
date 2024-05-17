@@ -33,3 +33,29 @@ export const sendChatRequest = async (message: string) => {
   const data = await res.data;
   return data;
 };
+
+export const getUserChats = async () => {
+  // console.log("getUserChat client");
+
+  const res = await axios.get("/chat/all-chats");
+  // console.log("response getUserChats:", res);
+
+  if (res.status !== 200) {
+    throw new Error("Unable to get chats.");
+  }
+  const data = await res.data;
+  return data;
+};
+
+export const deleteUserChats = async () => {
+  // console.log("deleteUserChats client");
+
+  const res = await axios.delete("/chat/delete");
+  // console.log("response deleteUserChats:", res);
+
+  if (res.status !== 200) {
+    throw new Error("Unable to delete chats.");
+  }
+  const data = await res.data;
+  return data;
+};

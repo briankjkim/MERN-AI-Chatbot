@@ -15,7 +15,7 @@ export const validate = (validations: ContextRunner[]) => {
   };
 };
 
-export const logingValidator = [
+export const loginValidator = [
   body("email").trim().isEmail().withMessage("Email is required."),
   body("password")
     .trim()
@@ -25,10 +25,9 @@ export const logingValidator = [
 
 export const signupValidator = [
   body("name").notEmpty().withMessage("Name is required."),
-  ...logingValidator,
+  ...loginValidator,
 ];
 
 export const chatCompletionValidator = [
   body("message").notEmpty().withMessage("Message is required."),
-  ...logingValidator,
 ];

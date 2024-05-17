@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { ROLE_ASSISTANT } from "../../helpers/constants";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import React from "react";
 
 function extractCodeFromString(message: string) {
   if (message.includes("```")) {
@@ -53,16 +54,20 @@ const ChatItem = ({ content, role }: { content: string; role: string }) => {
         )}
         {messageBlocks &&
           messageBlocks.length &&
-          messageBlocks.map((block) =>
+          messageBlocks.map((block, index) =>
             isCodeBlock(block) ? (
-              <SyntaxHighlighter
-                style={coldarkDark}
-                language={extractLanguage(block)}
-              >
-                {block}
-              </SyntaxHighlighter>
+              <React.Fragment key={index}>
+                <SyntaxHighlighter
+                  style={coldarkDark}
+                  language={extractLanguage(block)}
+                >
+                  {block}
+                </SyntaxHighlighter>
+              </React.Fragment>
             ) : (
-              <Typography sx={{ fontSize: "20px" }}>{block}</Typography>
+              <React.Fragment key={index}>
+                <Typography sx={{ fontSize: "20px" }}>{block}</Typography>
+              </React.Fragment>
             )
           )}
       </Box>

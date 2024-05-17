@@ -125,3 +125,35 @@ export const verifyUser = async (
     return res.status(500).json({ message: "Error", cause: error.message });
   }
 };
+
+export const userLogout = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const foundUser = await User.findById(res.locals.jwtData.id);
+    if (!foundUser) {
+      return res.status(401).send("User not registered or Token is missing.");
+    }
+
+    if (foundUser._id.toString() !== res.locals.jwtData.id) {
+      return res.status(401).send("Permissions didn't match.");
+    }
+
+    // create and store tokens
+    res.clearCookie(COOKIE_NAME, {
+      httpOnly: true,
+      domain: "localhost",
+      signed: true,
+      path: "/",
+    });
+
+    return res
+      .status(200)
+      .json({ message: "OK", name: foundUser.name, email: foundUser.email });
+  } catch (error) {
+    console.log("Error: ", error);
+    return res.status(500).json({ message: "Error", cause: error.message });
+  }
+};

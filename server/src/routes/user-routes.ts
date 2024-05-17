@@ -6,7 +6,7 @@ import {
   verifyUser,
 } from "../controllers/user-controllers.js";
 import {
-  logingValidator,
+  loginValidator,
   signupValidator,
   validate,
 } from "../utils/validators.js";
@@ -16,7 +16,7 @@ const userRoutes = Router();
 
 userRoutes.get("/", getAllUsers);
 userRoutes.post("/signup", validate(signupValidator), userSignUp);
-userRoutes.post("/login", validate(logingValidator), userLogin);
+userRoutes.post("/login", validate(loginValidator), userLogin);
 userRoutes.get("/auth-status", verifyToken, verifyUser);
 
 export default userRoutes;

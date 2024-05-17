@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/User.js";
 import Configuration, { OpenAI } from "openai";
+import { CreateChatCompletionRequestMessage } from "openai/resources/chat/index.mjs";
+import { configureOpenAI } from "../config/openai-config.js";
 
 export const generateChatCompletion = async (
   req: Request,
@@ -23,27 +25,25 @@ export const generateChatCompletion = async (
         .json({ message: "User not registered OR Token malfunctioned" });
     }
 
-    const config = new Configuration({
-      apiKey: process.env.OPEN_AI_SECRET,
-      organization: process.env.OPENAI_ORGANIZATION_ID,
-    });
-
+    // Set up OpenAI object with configuration
+    const config = configureOpenAI();
     const openai = new OpenAI({ apiKey: config.apiKey });
 
     const messages = [
       { role: "system", content: "You are a helpful assistant." },
       ...user.chats.map(({ role, content }) => ({ role, content })),
       { role: "user", content: message },
-    ];
+    ] as CreateChatCompletionRequestMessage[];
 
-    console.log("Constructed messages:", messages);
+    // console.log("Constructed messages:", messages);
+    // [{ role: "user", content: message }]
 
     const params: OpenAI.Chat.CompletionCreateParamsNonStreaming = {
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: message }],
+      messages: messages,
     };
 
-    console.log("OpenAI API Request Params:", params);
+    // console.log("OpenAI API Request Params:", params);
 
     const chatCompletion = await openai.chat.completions.create(params);
 

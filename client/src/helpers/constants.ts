@@ -1,38 +1,38 @@
-const ROLE_USER = "User";
-const ROLE_ASSISTANT = "Assistant";
+const ROLE_USER = "user";
+const ROLE_ASSISTANT = "assistant";
 const DEFAULT_CHAT_MESSAGES = [
   {
-    role: "User",
+    role: "user",
     content: "Hi there! How can I help you today?",
   },
   {
-    role: "Assistant",
+    role: "assistant",
     content: "Hello! I'm here to assist you. What do you need help with?",
   },
   {
-    role: "User",
+    role: "user",
     content: "I'm having trouble with my computer. It keeps crashing.",
   },
   {
-    role: "Assistant",
+    role: "assistant",
     content:
       "That sounds frustrating. Have you tried restarting your computer?",
   },
   {
-    role: "User",
+    role: "user",
     content: "Yes, I've tried that multiple times, but the issue persists.",
   },
   {
-    role: "Assistant",
+    role: "assistant",
     content:
       "Let's try running a virus scan to see if there's any malware causing the problem.",
   },
   {
-    role: "User",
+    role: "user",
     content: "Good idea. I'll do that now.",
   },
   {
-    role: "Assistant",
+    role: "assistant",
     content: "Great! Let me know if you need further assistance.",
   },
 ];

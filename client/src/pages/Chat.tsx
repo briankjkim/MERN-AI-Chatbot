@@ -1,14 +1,32 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import { Avatar, Box, Button, IconButton, Typography } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 import { red } from "@mui/material/colors";
-import { DEFAULT_CHAT_MESSAGES } from "../helpers/constants";
 import ChatItem from "../components/chat/ChatItem";
+import { IoMdSend } from "react-icons/io";
+import { useRef, useState } from "react";
+import { ROLE_USER } from "../helpers/constants";
+import { sendChatRequest } from "../helpers/api-communicator";
 
-const chatMessages = DEFAULT_CHAT_MESSAGES;
-
+type Message = {
+  role: string;
+  content: string;
+};
 const Chat = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const auth = useAuth();
+  const [chatMessages, setChatMessages] = useState<Message[]>([]);
+  const handleSubmit = async () => {
+    const content = inputRef.current?.value as string;
+    if (inputRef && inputRef.current) {
+      inputRef.current.value = "";
+    }
+    const newMessage: Message = { role: ROLE_USER, content: content };
+    setChatMessages((prev) => [...prev, newMessage]);
+    const chatData = await sendChatRequest(content);
+    setChatMessages([...chatData.chats]);
+    //
+  };
   return (
     <Box
       sx={{
@@ -112,6 +130,36 @@ const Chat = () => {
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
         </Box>
+        <div
+          style={{
+            width: "100%",
+            padding: "20px",
+            borderRadius: 8,
+            backgroundColor: "rgb(17, 27, 39)",
+            display: "flex",
+            marginRight: "auto",
+          }}
+        >
+          <input
+            ref={inputRef}
+            type="text"
+            style={{
+              width: "100%",
+              backgroundColor: "transparent",
+              padding: "10px",
+              border: "none",
+              outline: "none",
+              color: "white",
+              fontSize: "20px",
+            }}
+          />
+          <IconButton
+            onClick={handleSubmit}
+            sx={{ ml: "auto", color: "white" }}
+          >
+            <IoMdSend />
+          </IconButton>
+        </div>
       </Box>
     </Box>
   );

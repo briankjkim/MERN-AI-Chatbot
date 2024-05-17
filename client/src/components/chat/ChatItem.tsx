@@ -28,6 +28,16 @@ function isCodeBlock(text: string) {
   return false;
 }
 
+function extractLanguage(text: string) {
+  const languageRegex = /^\w+/;
+  const match = text.match(languageRegex);
+  // console.log("detected language:", match?.[0]);
+  if (match) {
+    return match[0];
+  }
+  return;
+}
+
 const ChatItem = ({ content, role }: { content: string; role: string }) => {
   const auth = useAuth();
   const messageBlocks = extractCodeFromString(content);
@@ -45,7 +55,10 @@ const ChatItem = ({ content, role }: { content: string; role: string }) => {
           messageBlocks.length &&
           messageBlocks.map((block) =>
             isCodeBlock(block) ? (
-              <SyntaxHighlighter style={coldarkDark} language="javascript">
+              <SyntaxHighlighter
+                style={coldarkDark}
+                language={extractLanguage(block)}
+              >
                 {block}
               </SyntaxHighlighter>
             ) : (
@@ -61,9 +74,23 @@ const ChatItem = ({ content, role }: { content: string; role: string }) => {
         {auth?.user?.name.split(" ")[1][0]}{" "}
       </Avatar>
       <Box>
-        <Typography color={"white"} fontSize={"20px"}>
-          {content}
-        </Typography>
+        {!messageBlocks && (
+          <Typography sx={{ fontSize: "20px" }}>{content}</Typography>
+        )}
+        {messageBlocks &&
+          messageBlocks.length &&
+          messageBlocks.map((block) =>
+            isCodeBlock(block) ? (
+              <SyntaxHighlighter
+                style={coldarkDark}
+                language={extractLanguage(block)}
+              >
+                {block}
+              </SyntaxHighlighter>
+            ) : (
+              <Typography sx={{ fontSize: "20px" }}>{block}</Typography>
+            )
+          )}
       </Box>
     </Box>
   );

@@ -3,6 +3,7 @@ import User from "../models/User.js";
 import Configuration, { OpenAI } from "openai";
 import { CreateChatCompletionRequestMessage } from "openai/resources/chat/index.mjs";
 import { configureOpenAI } from "../config/openai-config.js";
+import { SYSTEM_PROMPT_TES } from "../utils/constants.js";
 
 export const generateChatCompletion = async (
   req: Request,
@@ -30,7 +31,10 @@ export const generateChatCompletion = async (
     const openai = new OpenAI({ apiKey: config.apiKey });
 
     const messages = [
-      { role: "system", content: "You are a helpful assistant." },
+      {
+        role: "system",
+        content: SYSTEM_PROMPT_TES,
+      },
       ...user.chats.map(({ role, content }) => ({ role, content })),
       { role: "user", content: message },
     ] as CreateChatCompletionRequestMessage[];

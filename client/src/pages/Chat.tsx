@@ -107,7 +107,10 @@ const Chat = () => {
             }}
           >
             {auth?.user?.name[0]}
-            {auth?.user?.name.split(" ")[1][0]}
+            {auth?.user?.name?.split?.(" ") &&
+            auth?.user?.name?.split?.(" ")?.length > 1
+              ? auth?.user?.name?.split?.(" ")[1]?.[0]
+              : ""}
           </Avatar>
           <Typography sx={{ mx: "auto", fontFamily: "work sans" }}>
             You are talking to a Chatbot 🤖

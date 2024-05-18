@@ -28,6 +28,7 @@ const Login = () => {
     if (auth?.user) {
       return navigate("/chat");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
   return (

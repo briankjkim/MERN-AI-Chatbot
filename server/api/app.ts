@@ -1,12 +1,9 @@
-import { connectToMongoDB } from "./db/connection.js";
 import express from "express";
 import { config } from "dotenv";
 import morgan from "morgan";
 import appRouter from "./routes/index.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
-const PORT = process.env.PORT || 5000;
 // Set up express app
 config();
 const app = express();
@@ -20,14 +17,5 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(morgan("dev"));
 
 app.use("/api/v1", appRouter);
-
-// Connections and listeners
-connectToMongoDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log("Server listening and connected to DB 😎");
-    });
-  })
-  .catch((err) => console.log(err));
 
 export default app;

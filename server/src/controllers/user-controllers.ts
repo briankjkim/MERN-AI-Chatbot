@@ -38,6 +38,7 @@ export const userSignUp = async (
       signed: true,
       sameSite: "none",
       secure: true,
+      partitioned: true,
     });
 
     const expires = new Date();
@@ -52,6 +53,7 @@ export const userSignUp = async (
       expires: expires,
       sameSite: "none",
       secure: true,
+      partitioned: true,
     });
 
     return res
@@ -82,6 +84,7 @@ export const userLogin = async (req: Request, res: Response) => {
       signed: true,
       sameSite: "none",
       secure: true,
+      partitioned: true,
     });
 
     const expires = new Date();
@@ -96,6 +99,7 @@ export const userLogin = async (req: Request, res: Response) => {
       expires: expires,
       sameSite: "none",
       secure: true,
+      partitioned: true,
     });
 
     return res
@@ -153,6 +157,7 @@ export const userLogout = async (
       signed: true,
       sameSite: "none",
       secure: true,
+      partitioned: true,
     });
 
     return res

@@ -11,7 +11,7 @@ const app = express();
 // Middlewares
 app.use(
   cors({
-    origin: "https://mern-ai-chatbot-client.vercel.app/",
+    origin: "https://mern-ai-chatbot-client.vercel.app",
     credentials: true,
   })
 );

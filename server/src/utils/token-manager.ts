@@ -16,11 +16,11 @@ export const verifyToken = async (
   next: NextFunction
 ) => {
   const token = req.signedCookies[`${COOKIE_NAME}`];
-  console.log("verifyToken: req.cookies", req.cookies);
+  // console.log("verifyToken: req.cookies", req.cookies);
 
   if (!token || token.trim() === "") {
-    console.log("token", token);
-    console.log("cookies", req.signedCookies);
+    // console.log("token", token);
+    // console.log("cookies", req.signedCookies);
 
     return res.status(401).json({ message: "Token Not Found" });
   }

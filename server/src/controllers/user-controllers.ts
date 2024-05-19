@@ -36,6 +36,7 @@ export const userSignUp = async (
       path: "/api/v1",
       httpOnly: true,
       signed: true,
+      sameSite: "none",
     });
 
     const expires = new Date();
@@ -48,6 +49,7 @@ export const userSignUp = async (
       httpOnly: true,
       signed: true,
       expires: expires,
+      sameSite: "none",
     });
 
     return res
@@ -76,6 +78,7 @@ export const userLogin = async (req: Request, res: Response) => {
       path: "/api/v1",
       httpOnly: true,
       signed: true,
+      sameSite: "none",
     });
 
     const expires = new Date();
@@ -88,6 +91,7 @@ export const userLogin = async (req: Request, res: Response) => {
       httpOnly: true,
       signed: true,
       expires: expires,
+      sameSite: "none",
     });
 
     return res
@@ -143,6 +147,7 @@ export const userLogout = async (
       path: "/api/v1",
       httpOnly: true,
       signed: true,
+      sameSite: "none",
     });
 
     return res

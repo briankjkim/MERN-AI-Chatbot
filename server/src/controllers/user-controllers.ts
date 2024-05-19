@@ -34,7 +34,7 @@ export const userSignUp = async (
     // create and store tokens
     res.clearCookie(COOKIE_NAME, {
       httpOnly: true,
-      domain: "localhost",
+      domain: "https://tes-chatbot-server.onrender.com",
       signed: true,
       path: "/",
     });
@@ -44,7 +44,7 @@ export const userSignUp = async (
     const token = createToken(newUser._id.toString(), newUser.email, "7d"); // Expire token in 7 days
     res.cookie(COOKIE_NAME, token, {
       path: "/",
-      domain: "localhost",
+      domain: "https://tes-chatbot-server.onrender.com",
       expires: expires,
       httpOnly: true,
       signed: true,
@@ -77,7 +77,7 @@ export const userLogin = async (
 
     res.clearCookie(COOKIE_NAME, {
       httpOnly: true,
-      domain: "localhost",
+      domain: "https://tes-chatbot-server.onrender.com",
       signed: true,
       path: "/",
     });
@@ -87,7 +87,7 @@ export const userLogin = async (
     const token = createToken(foundUser._id.toString(), foundUser.email, "7d"); // Expire token in 7 days
     res.cookie(COOKIE_NAME, token, {
       path: "/",
-      domain: "localhost",
+      domain: "https://tes-chatbot-server.onrender.com",
       expires: expires,
       httpOnly: true,
       signed: true,
@@ -144,7 +144,7 @@ export const userLogout = async (
     // create and store tokens
     res.clearCookie(COOKIE_NAME, {
       httpOnly: true,
-      domain: "localhost",
+      domain: "https://tes-chatbot-server.onrender.com",
       signed: true,
       path: "/",
     });

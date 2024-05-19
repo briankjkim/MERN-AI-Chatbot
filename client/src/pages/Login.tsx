@@ -20,6 +20,7 @@ const Login = () => {
       toast.success("Signed In Successfully! 😍", { id: "login" });
       navigate("/");
     } catch (error) {
+      console.log("Error SignIn:", error);
       toast.error("Error in Signing In 🥲", { id: "login" });
     }
   };

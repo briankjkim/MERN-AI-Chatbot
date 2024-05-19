@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 const Signup = () => {
   const auth = useAuth();
@@ -23,7 +24,10 @@ const Signup = () => {
       toast.success("Signed Up Successfully! 😍", { id: "signup" });
       navigate("/");
     } catch (error) {
-      toast.error("Error in Signing Up. Please contact the admin 🥲.", {
+      const parsedError = error as AxiosError;
+      const serverErrorData = parsedError.response?.data;
+      console.log("parsedError.message:", parsedError.message);
+      toast.error(`Error Signing Up 🥲: response: ${serverErrorData}`, {
         id: "signup",
       });
     }

@@ -29,10 +29,12 @@ const Login = () => {
       toast.success("Signed In Successfully! 😍", { id: "login" });
       navigate("/");
     } catch (error) {
-      console.log("Error SignIn:", error);
       const parsedError = error as AxiosError;
+      const serverErrorData = parsedError.response?.data;
       console.log("parsedError.message:", parsedError.message);
-      toast.error("Error in Signing In 🥲", { id: "login" });
+      toast.error(`Error Signing In 🥲: response: ${serverErrorData}`, {
+        id: "login",
+      });
     }
   };
 

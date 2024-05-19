@@ -5,10 +5,19 @@ import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 const Login = () => {
   const auth = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth?.user) {
+      return navigate("/chat");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -21,16 +30,11 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       console.log("Error SignIn:", error);
+      const parsedError = error as AxiosError;
+      console.log("parsedError.message:", parsedError.message);
       toast.error("Error in Signing In 🥲", { id: "login" });
     }
   };
-
-  useEffect(() => {
-    if (auth?.user) {
-      return navigate("/chat");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth]);
 
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>

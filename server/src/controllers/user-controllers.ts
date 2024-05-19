@@ -31,24 +31,24 @@ export const userSignUp = async (
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
-    // create and store tokens
     res.clearCookie(COOKIE_NAME, {
+      domain: ".tes-chatbot-server.onrender.com",
+      path: "/api/v1",
       httpOnly: true,
-      domain: "https://tes-chatbot-server.onrender.com",
       signed: true,
-      path: "/",
     });
 
     const expires = new Date();
     expires.setDate(expires.getDate() + 7);
     const token = createToken(newUser._id.toString(), newUser.email, "7d"); // Expire token in 7 days
+
     res.cookie(COOKIE_NAME, token, {
-      path: "/",
-      domain: "https://tes-chatbot-server.onrender.com",
-      expires: expires,
+      domain: ".tes-chatbot-server.onrender.com",
+      path: "/api/v1",
       httpOnly: true,
       signed: true,
-    }); // TODO: Change domain name when deploying
+      expires: expires,
+    });
 
     return res
       .status(201)
@@ -59,11 +59,7 @@ export const userSignUp = async (
   }
 };
 
-export const userLogin = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const userLogin = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const foundUser = await User.findOne({ email });
@@ -76,22 +72,23 @@ export const userLogin = async (
     }
 
     res.clearCookie(COOKIE_NAME, {
+      domain: ".tes-chatbot-server.onrender.com",
+      path: "/api/v1",
       httpOnly: true,
-      domain: "https://tes-chatbot-server.onrender.com",
       signed: true,
-      path: "/",
     });
 
     const expires = new Date();
     expires.setDate(expires.getDate() + 7);
     const token = createToken(foundUser._id.toString(), foundUser.email, "7d"); // Expire token in 7 days
+
     res.cookie(COOKIE_NAME, token, {
-      path: "/",
-      domain: "https://tes-chatbot-server.onrender.com",
-      expires: expires,
+      domain: ".tes-chatbot-server.onrender.com",
+      path: "/api/v1",
       httpOnly: true,
       signed: true,
-    }); // TODO: Change domain name when deploying
+      expires: expires,
+    });
 
     return res
       .status(200)
@@ -141,12 +138,11 @@ export const userLogout = async (
       return res.status(401).send("Permissions didn't match.");
     }
 
-    // create and store tokens
     res.clearCookie(COOKIE_NAME, {
+      domain: ".tes-chatbot-server.onrender.com",
+      path: "/api/v1",
       httpOnly: true,
-      domain: "https://tes-chatbot-server.onrender.com",
       signed: true,
-      path: "/",
     });
 
     return res

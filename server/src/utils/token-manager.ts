@@ -17,7 +17,10 @@ export const verifyToken = async (
 ) => {
   const token = req.signedCookies[`${COOKIE_NAME}`];
   if (!token || token.trim() === "") {
-    return res.status(401).json({ message: "Token Not Received" });
+    console.log("token", token);
+    console.log("cookies", req.signedCookies);
+
+    return res.status(401).json({ message: "Token Not Found" });
   }
   return new Promise<void>((resolve, reject) => {
     return jwt.verify(token, process.env.JWT_SECRET, (err, success) => {

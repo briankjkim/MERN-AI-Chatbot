@@ -32,12 +32,10 @@ const Login = () => {
       const parsedError = error as AxiosError;
       const serverErrorData = parsedError.response?.data;
       console.log("parsedError.message:", parsedError.message);
-      toast.error(
-        `Error Signing In 🥲: response: ${JSON.stringify(serverErrorData)}`,
-        {
-          id: "login",
-        }
-      );
+      console.log("serverErrorData:", serverErrorData);
+      toast.error(`Error Signing In 🥲: response: ${parsedError.message}`, {
+        id: "login",
+      });
     }
   };
 

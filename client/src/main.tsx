@@ -8,7 +8,17 @@ import { AuthProvider } from "./context/AuthContext.tsx";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
 
-axios.defaults.baseURL = "https://tes-chatbot-server.onrender.com/api/v1";
+const getURL = () => {
+  let SERVER_URL;
+  const mode = import.meta.env.VITE_APP_RUNTIME_MODE;
+  mode === "dev"
+    ? (SERVER_URL = import.meta.env.VITE_DEV_URL)
+    : (SERVER_URL = import.meta.env.VITE_PROD_URL);
+  return SERVER_URL;
+};
+
+console.log("SERVER URL", getURL());
+axios.defaults.baseURL = getURL();
 axios.defaults.withCredentials = true;
 
 const theme = createTheme({

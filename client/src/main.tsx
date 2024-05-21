@@ -14,11 +14,11 @@ const getURL = () => {
   mode === "dev"
     ? (SERVER_URL = import.meta.env.VITE_DEV_URL)
     : (SERVER_URL = import.meta.env.VITE_PROD_URL);
-    console.log("mode, url", mode, import.meta.env.VITE_PROD_URL);
+  // console.log("mode, url", mode, import.meta.env.VITE_PROD_URL);
   return SERVER_URL;
 };
 
-console.log("SERVER URL", getURL());
+// console.log("SERVER URL", getURL());
 axios.defaults.baseURL = getURL();
 axios.defaults.withCredentials = true;
 

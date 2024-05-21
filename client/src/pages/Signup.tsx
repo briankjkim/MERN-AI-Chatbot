@@ -27,7 +27,8 @@ const Signup = () => {
       const parsedError = error as AxiosError;
       const serverErrorData = parsedError.response?.data;
       console.log("parsedError.message:", parsedError.message);
-      toast.error(`Error Signing Up 🥲: response: ${serverErrorData}`, {
+      console.log("serverErrorData:", serverErrorData);
+      toast.error(`Error Signing Up 🥲: response: ${parsedError.message}`, {
         id: "signup",
       });
     }

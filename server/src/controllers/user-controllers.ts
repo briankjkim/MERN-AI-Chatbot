@@ -4,6 +4,15 @@ import { NextFunction, Request, Response } from "express";
 import { createToken } from "../utils/token-manager.js";
 import { COOKIE_NAME } from "../utils/constants.js";
 
+const cookieDomain =
+  process.env.RUN_NODE_ENV === "development"
+    ? process.env.LOCALHOST_DOMAIN
+    : process.env.SERVER_DOMAIN;
+const cookiePath =
+  process.env.RUN_NODE_ENV === "development"
+    ? process.env.LOCALHOST_PATH
+    : process.env.SERVER_PATH;
+
 export const getAllUsers = async (
   req: Request,
   res: Response,
@@ -32,8 +41,8 @@ export const userSignUp = async (
     await newUser.save();
 
     res.clearCookie(COOKIE_NAME, {
-      domain: ".tes-chatbot-server.onrender.com",
-      path: "/api/v1",
+      domain: cookieDomain,
+      path: cookiePath,
       httpOnly: true,
       signed: true,
       sameSite: "none",
@@ -46,8 +55,8 @@ export const userSignUp = async (
     const token = createToken(newUser._id.toString(), newUser.email, "7d"); // Expire token in 7 days
 
     res.cookie(COOKIE_NAME, token, {
-      domain: ".tes-chatbot-server.onrender.com",
-      path: "/api/v1",
+      domain: cookieDomain,
+      path: cookiePath,
       httpOnly: true,
       signed: true,
       expires: expires,
@@ -78,8 +87,8 @@ export const userLogin = async (req: Request, res: Response) => {
     }
 
     res.clearCookie(COOKIE_NAME, {
-      domain: ".tes-chatbot-server.onrender.com",
-      path: "/api/v1",
+      domain: cookieDomain,
+      path: cookiePath,
       httpOnly: true,
       signed: true,
       sameSite: "none",
@@ -92,8 +101,8 @@ export const userLogin = async (req: Request, res: Response) => {
     const token = createToken(foundUser._id.toString(), foundUser.email, "7d"); // Expire token in 7 days
 
     res.cookie(COOKIE_NAME, token, {
-      domain: ".tes-chatbot-server.onrender.com",
-      path: "/api/v1",
+      domain: cookieDomain,
+      path: cookiePath,
       httpOnly: true,
       signed: true,
       expires: expires,
@@ -151,8 +160,8 @@ export const userLogout = async (
     }
 
     res.clearCookie(COOKIE_NAME, {
-      domain: ".tes-chatbot-server.onrender.com",
-      path: "/api/v1",
+      domain: cookieDomain,
+      path: cookiePath,
       httpOnly: true,
       signed: true,
       sameSite: "none",

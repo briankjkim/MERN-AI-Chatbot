@@ -17,7 +17,7 @@ const Signup = () => {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     try {
-      toast.loading("Attempting to sign up a new user account 😎!", {
+      toast.loading("Attempting to sign up a new user account 😎! (Warning: This may take up to 1 minute)", {
         id: "signup",
       });
       await auth?.signup(name, email, password);

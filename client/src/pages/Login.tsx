@@ -24,7 +24,7 @@ const Login = () => {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     try {
-      toast.loading("Signing In 😎!", { id: "login" });
+      toast.loading("Signing In 😎! (Warning: This may take up to 1 minute)", { id: "login" });
       await auth?.login(email, password);
       toast.success("Signed In Successfully! 😍", { id: "login" });
       navigate("/");

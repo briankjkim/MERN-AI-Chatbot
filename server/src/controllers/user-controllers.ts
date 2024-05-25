@@ -12,6 +12,7 @@ const cookiePath =
   process.env.RUN_NODE_ENV === "development"
     ? process.env.LOCALHOST_PATH
     : process.env.SERVER_PATH;
+const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 
 export const getAllUsers = async (
   req: Request,
@@ -48,10 +49,11 @@ export const userSignUp = async (
       sameSite: "none",
       secure: true,
       partitioned: true,
+      maxAge: maxAge, // Set the maxAge attribute
     });
 
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 7);
+    // const expires = new Date();
+    // expires.setDate(expires.getDate() + 7);
     const token = createToken(newUser._id.toString(), newUser.email, "7d"); // Expire token in 7 days
 
     res.cookie(COOKIE_NAME, token, {
@@ -59,10 +61,10 @@ export const userSignUp = async (
       path: cookiePath,
       httpOnly: true,
       signed: true,
-      expires: expires,
       sameSite: "none",
       secure: true,
       partitioned: true,
+      maxAge: maxAge, // Set the maxAge attribute
     });
 
     return res
@@ -94,10 +96,11 @@ export const userLogin = async (req: Request, res: Response) => {
       sameSite: "none",
       secure: true,
       partitioned: true,
+      maxAge: maxAge, // Set the maxAge attribute
     });
 
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 7);
+    // const expires = new Date();
+    // expires.setDate(expires.getDate() + 7);
     const token = createToken(foundUser._id.toString(), foundUser.email, "7d"); // Expire token in 7 days
 
     res.cookie(COOKIE_NAME, token, {
@@ -105,10 +108,10 @@ export const userLogin = async (req: Request, res: Response) => {
       path: cookiePath,
       httpOnly: true,
       signed: true,
-      expires: expires,
       sameSite: "none",
       secure: true,
       partitioned: true,
+      maxAge: maxAge, // Set the maxAge attribute
     });
 
     return res
@@ -167,6 +170,7 @@ export const userLogout = async (
       sameSite: "none",
       secure: true,
       partitioned: true,
+      maxAge: maxAge, // Set the maxAge attribute
     });
 
     return res

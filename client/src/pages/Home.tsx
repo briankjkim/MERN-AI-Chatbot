@@ -34,6 +34,11 @@ const Home = () => {
             style={{ width: "200px", margin: "auto" }}
           />
           <img
+            src="tes.png"
+            alt="tes"
+            style={{ width: "200px", margin: "auto" }}
+          />
+          <img
             className="image-inverted rotate"
             src="openai.png"
             alt="openai"
@@ -43,7 +48,7 @@ const Home = () => {
         <Box sx={{ display: "flex", width: "100%", mx: "auto" }}>
           <img
             src="chat.png"
-            alt="chatbot"
+            alt="chatexample"
             style={{
               display: "flex",
               margin: "auto",

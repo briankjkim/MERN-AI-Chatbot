@@ -7,7 +7,7 @@ function TypingAnimator() {
         // Same substring at the start will only be typed once, initially
         "Chat with TES-AI GPT",
         1000,
-        "Powered by OpenAI and Hayanson Solutions🤚🏻",
+        "Powered by OpenAI and MERN Stack",
         1000,
         "Talk to an Ancient Philosopher of Wisdom",
         1000,

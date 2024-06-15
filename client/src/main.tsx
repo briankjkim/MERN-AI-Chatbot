@@ -7,6 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
+import { inject } from "@vercel/analytics";
+inject();
 
 const getURL = () => {
   let SERVER_URL;
